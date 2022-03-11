@@ -54,7 +54,6 @@ function modifTable() {
     document.querySelector('table').classList.add("table", "table-dark", "w-50");
 }
 
-
 function crearTotales() {
 
     let crearParrafo = document.createElement('p')
@@ -62,7 +61,6 @@ function crearTotales() {
     crearDivAlert.setAttribute('id', 'alertMejor')
     let totalArray = 0
     let mejorOpcion = ''
-
 
     for (i = 0; i < arrayCuotas.length; i++) {
         totalArray += arrayCuotas[i];
