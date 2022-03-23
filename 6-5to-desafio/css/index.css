@@ -1,0 +1,146 @@
+.cart-boton {
+	position: relative;
+	padding: 10px;
+	width: 185px;
+	height: 50px;
+	border: 0;
+	border-radius: 10px;
+	background-color: #4834d4;
+	outline: none;
+	cursor: pointer;
+	color: #fff;
+	transition: .3s ease-in-out;
+	overflow: hidden;
+}
+.cart-boton:hover {
+	background-color: #35269b;
+}
+.cart-boton:active {
+	transform: scale(.9);
+}
+
+.cart-boton .fa-shopping-cart {
+	position: absolute;
+	z-index: 2;
+	top: 50%;
+	left: -10%;
+	font-size: 2em;
+	transform: translate(-50%,-50%);
+}
+.cart-boton .fa-box {
+	position: absolute;
+	z-index: 3;
+	top: -20%;
+	left: 52%;
+	font-size: 1.2em;
+	transform: translate(-50%,-50%);
+}
+.cart-boton span {
+	position: absolute;
+	z-index: 3;
+	left: 50%;
+	top: 50%;
+	font-size: 1.2em;
+	color: #fff;
+	transform: translate(-50%,-50%);
+}
+.cart-boton span.anadir {
+	opacity: 1;
+}
+.cart-boton span.anadido {
+	opacity: 0;
+}
+
+.cart-boton.clicked .fa-shopping-cart {
+	animation: cart 1.5s ease-in-out forwards;
+}
+.cart-boton.clicked .fa-box {
+	animation: box 1.5s ease-in-out forwards;
+}
+.cart-boton.clicked span.anadir {
+	animation: txt1 1.5s ease-in-out forwards;
+}
+.cart-boton.clicked span.anadido {
+	animation: txt2 1.5s ease-in-out forwards;
+}
+@keyframes cart {
+	0% {
+		left: -10%;
+	}
+	40%, 60% {
+		left: 50%;
+	}
+	100% {
+		left: 110%;
+	}
+}
+@keyframes box {
+	0%, 40% {
+		top: -20%;
+	}
+	60% {
+		top: 40%;
+		left: 52%;
+	}
+	100% {
+		top: 40%;
+		left: 112%;
+	}
+}
+@keyframes txt1 {
+	0% {
+		opacity: 1;
+	}
+	20%, 100% {
+		opacity: 0;
+	}
+}
+@keyframes txt2 {
+	0%, 80% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.dropdown-menu {
+	width: 300px;
+
+}
+
+.container-fluid {
+	padding: 0;
+}
+
+footer {
+	background: #2a2e32;
+  }
+  
+  .text-small {
+	font-size: 0.9rem;
+  }
+  
+  a {
+	color: inherit;
+	text-decoration: none;
+	transition: all 0.3s;
+  }
+  
+  a:hover, a:focus {
+	text-decoration: none;
+  }
+  
+  .form-control {
+	background: #212529;
+	border-color: #545454;
+  }
+  
+  .form-control:focus {
+	background: #212529;
+  }
+  
+  footer {
+	background: #212529;
+  }
+  
