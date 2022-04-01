@@ -1,0 +1,39 @@
+.prod-recomendado {
+	color: whitesmoke;
+}
+
+footer {
+    background: #212529;
+}
+
+body {
+    background-color: #212529;
+}
+
+.card {
+    background-color: #2a2e32;
+}
+
+.card .card-title {
+    color: whitesmoke;
+}
+
+.text-precio {
+    color: greenyellow;
+}
+
+.navbar i, .navbar a {
+    color: whitesmoke;
+}
+
+.offcanvas {
+    background-color: #212529;
+}
+
+.offcanvas-title {
+    color: whitesmoke;
+}
+
+.offcanvas table td {
+    color: whitesmoke;
+}

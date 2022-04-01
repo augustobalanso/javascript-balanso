@@ -15,9 +15,9 @@
 <body>
 
   <header class="container">
-    <nav class="navbar navbar-light bg-light fixed-top">
+    <nav class="navbar">
       <div class="container">
-        <a class="navbar-brand" href="#"><img src="./img/logo/logo.jpg" alt="" width="40" height="24" class="me-4">Zapas</a>
+        <a class="navbar-brand" href="#"><img src="./img/logo/logo.jpg" alt="" width="40" height="24" class="me-4 text-dark">Zapas</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
           aria-controls="offcanvasNavbar" onclick="crearCarrito()">
           <i class="fas fa-shopping-cart fs-3"></i>
@@ -56,7 +56,7 @@
 
     <div class="container" id="scroll-productos">
 
-      <h1 class="text-center m-5">Productos Recomendados</h1>
+      <p class="prod-recomendado text-center m-5">Productos Recomendados</p>
 
       <div class="row justify-content-evenly mb-5">
 
@@ -64,7 +64,12 @@
           <img src="./img/productos/1.JPG" class="card-img-top" alt="...">
           <div class="card-body d-flex flex-column align-items-center">
             <h5 class="card-title mb-3">Nike Air Force One R/W</h5>
-            <p class="text-success fw-bold" id="getPrice0">$15000</p>
+            <p class="text-precio fw-bold" id="getPrice0">$15000</p>
+            <div class="select is-small">
+              <select class="selectList" id="selectTalles">
+                <option>Talle</option>
+              </select>
+            </div>
             <button class="cart-boton" onclick="anadircarro(0)">
               <span class="anadir">Comprar</span>
               <span class="anadido">Añadido</span>
@@ -78,7 +83,12 @@
           <img src="./img/productos/2.JPG" class="card-img-top" alt="...">
           <div class="card-body d-flex flex-column align-items-center">
             <h5 class="card-title mb-3">Nike Air Jordan Low 3</h5>
-            <p class="text-success fw-bold" id="getPrice1">$12000</p>
+            <p class="text-precio fw-bold" id="getPrice1">$12000</p>
+            <div class="select is-small">
+              <select id="selectTalles">
+                <option>Talle</option>
+              </select>
+            </div>
             <button class="cart-boton" onclick="anadircarro(1)">
               <span class="anadir">Comprar</span>
               <span class="anadido">Añadido</span>
@@ -92,7 +102,12 @@
           <img src="./img/productos/3.JPG" class="card-img-top" alt="...">
           <div class="card-body d-flex flex-column align-items-center">
             <h5 class="card-title mb-3">Nike Air Max 90 Denim</h5>
-            <p class="text-success fw-bold" id="getPrice2">$19000</p>
+            <p class="text-precio fw-bold" id="getPrice2">$19000</p>
+            <div class="select is-small">
+              <select id="selectTalles">
+                <option>Talle</option>
+              </select>
+            </div>
             <button class="cart-boton" onclick="anadircarro(2)">
               <span class="anadir">Comprar</span>
               <span class="anadido">Añadido</span>
@@ -109,7 +124,12 @@
           <img src="./img/productos/4.JPG" class="card-img-top" alt="...">
           <div class="card-body d-flex flex-column align-items-center">
             <h5 class="card-title mb-3">Nike Air Jordan 1 B/W</h5>
-            <p class="text-success fw-bold" id="getPrice3">$15000</p>
+            <p class="text-precio fw-bold" id="getPrice3">$15000</p>
+            <div class="select is-small">
+              <select id="selectTalles">
+                <option>Talle</option>
+              </select>
+            </div>
             <button class="cart-boton" onclick="anadircarro(3)">
               <span class="anadir">Comprar</span>
               <span class="anadido">Añadido</span>
@@ -123,7 +143,12 @@
           <img src="./img/productos/5.JPG" class="card-img-top" alt="...">
           <div class="card-body d-flex flex-column align-items-center">
             <h5 class="card-title mb-3">Puma RS-X</h5>
-            <p class="text-success fw-bold" id="getPrice4">$18000</p>
+            <p class="text-precio fw-bold" id="getPrice4">$18000</p>
+            <div class="select is-small">
+              <select id="selectTalles">
+                <option>Talle</option>
+              </select>
+            </div>
             <button class="cart-boton" onclick="anadircarro(4)">
               <span class="anadir">Comprar</span>
               <span class="anadido">Añadido</span>
@@ -137,7 +162,12 @@
           <img src="./img/productos/6.JPG" class="card-img-top" alt="...">
           <div class="card-body d-flex flex-column align-items-center">
             <h5 class="card-title mb-3">Nike Air Force Mid Cam</h5>
-            <p class="text-success fw-bold" id="getPrice5">$14000</p>
+            <p class="text-precio fw-bold" id="getPrice5">$14000</p>
+            <div class="select is-small">
+              <select id="selectTalles">
+                <option>Talle</option>
+              </select>
+            </div>
             <button class="cart-boton" onclick="anadircarro(5)">
               <span class="anadir">Comprar</span>
               <span class="anadido">Añadido</span>
@@ -172,10 +202,10 @@
           <div class="col-lg-2 col-md-6">
             <h5 class="text-white mb-3">Nuestros proveedores</h5>
             <ul class="list-unstyled text-muted">
-              <li><a href="#">Nike</a></li>
-              <li><a href="#">Adidas</a></li>
-              <li><a href="#">Puma</a></li>
-              <li><a href="#">Balenciaga</a></li>
+              <li><a href="https://www.nike.com" target="_blank">Nike</a></li>
+              <li><a href="https://www.adidas.com" target="_blank">Adidas</a></li>
+              <li><a href="https://www.puma.com" target="_blank">Puma</a></li>
+              <li><a href="https://www.balenciaga.com" target="_blank">Balenciaga</a></li>
             </ul>
           </div>
           <div class="col-lg-4 col-md-6">
@@ -189,6 +219,12 @@
                     class="fas fa-paper-plane"></i></button>
               </div>
             </form>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="nightModeSwitch" onclick="changeToDarkMode()">
+            <label class="form-check-label text-white" for="flexSwitchCheckDefault">Nightmode</label>
           </div>
         </div>
       </div>
