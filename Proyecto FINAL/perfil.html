@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zapas - Pedidos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/91e0861dab.js" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/perfil.css">
+  <script src="./index.js" async></script>
+</head>
+
+<body>
+
+  <header class="container">
+    <nav class="navbar">
+      <div class="container">
+        <a class="navbar-brand" href="./index.html"><img src="./img/logo/logo.jpg" alt="" width="40" height="24"
+            class="me-4 text-dark">Zapas</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar" onclick="crearCarrito()">
+          <i class="fas fa-shopping-cart fs-3"></i>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Carrito</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body" id="offcanvasCarrito"></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main class="container">
+
+    <div class="row">
+      <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse">
+        <div class="position-sticky">
+          <div class="list-group list-group-flush mx-3 mt-4">
+            <a href="#" class="list-group-item list-group-item-action py-2 ripple active" aria-current="true">
+              <i class="fas fa-shopping-cart me-3"></i><span>Mis Pedidos</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="tablaCarritoPlaceholder" id="tablaCarritoPlaceholder">
+
+    </div>
+
+  </main>
+
+
+  </div>
+  </main>
+
+  <div class="container-fluid">
+
+    <footer class="fixed-bottom w-100 py-4 flex-shrink-0">
+      <div class="container py-4">
+        <div class="row gy-4 gx-5">
+          <div class="col-lg-4 col-md-6">
+            <h5 class="h1 text-white">Zapas.</h5>
+            <p class="small text-muted">Traemos modelos importados, consultar stock, BLAH BLAH BLAH.</p>
+            <p class="small text-muted mb-0">&copy; Copyright. Derechos reservados</p>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <h5 class="text-white mb-3">Links rápidos</h5>
+            <ul class="list-unstyled text-muted">
+              <li><a href="./index.html">Home</a></li>
+              <li><a href="#">Productos</a></li>
+              <li><a href="#">Perfil</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <h5 class="text-white mb-3">Nuestros proveedores</h5>
+            <ul class="list-unstyled text-muted">
+              <li><a href="https://www.nike.com" target="_blank">Nike</a></li>
+              <li><a href="https://www.adidas.com" target="_blank">Adidas</a></li>
+              <li><a href="https://www.puma.com" target="_blank">Puma</a></li>
+              <li><a href="https://www.balenciaga.com" target="_blank">Balenciaga</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <h5 class="text-white mb-3">Newsletter</h5>
+            <p class="small text-muted">Suscribite al newsletter para estar al tanto de los nuevos modelos que van
+              ingresando.</p>
+            <form action="#">
+              <div class="input-group mb-3">
+                <input class="form-control text-white" type="text" placeholder="Tu e-mail" aria-label="Tu e-mail"
+                  aria-describedby="button-addon2">
+                <button class="btn btn-primary" id="button-addon2" type="button"><i
+                    class="fas fa-paper-plane"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="nightModeSwitch"
+              onclick="changeToDarkMode()">
+            <label class="form-check-label text-white" for="flexSwitchCheckDefault">Nightmode</label>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+  </script>
+
+</body>
+
+</html>

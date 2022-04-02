@@ -37,3 +37,11 @@ body {
 .offcanvas table td {
     color: whitesmoke;
 }
+
+.sidebar {
+    background-color: #212529;
+}
+
+table td, table th {
+    color: whitesmoke;
+}
