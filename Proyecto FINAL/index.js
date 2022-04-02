@@ -245,8 +245,10 @@ function redirectToML() {
 		let checkPath = window.location.pathname.includes('perfil')
 		if (checkPath) {
 			displayCarrito()
+			console.log('corrio el carrito')
 		} else {
 			loadTalles()
+			console.log('corrio el loadtalles')
 		}
 	}
 
