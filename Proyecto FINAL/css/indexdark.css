@@ -45,3 +45,7 @@ body {
 table td, table th {
     color: whitesmoke;
 }
+
+.tablaCarritoPlaceholder p{
+    color: whitesmoke;
+}

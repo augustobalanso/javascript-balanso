@@ -172,7 +172,6 @@ function deletePedido() {
 
 }
 
-
 function redirectToML() {
 
 	Swal.fire({
@@ -183,107 +182,137 @@ function redirectToML() {
 		imageHeight: 256,
 		imageAlt: 'MercadoPago',
 	}).then((result) => {
-			if (result.isConfirmed) {
-				window.open('https://www.mercadopago.com.ar', '_blank')
+		if (result.isConfirmed) {
+			window.open('https://www.mercadopago.com.ar', '_blank')
+		}
+	})
+}
+
+function displayCarrito() {
+	let tablaPlaceholder = document.querySelector('#tablaCarritoPlaceholder');
+
+	if (localStorage.getItem('carritoConfirmado') === null) {
+		let carritoVacioMessage = document.createTextNode('Tu carrito se encuentra vacio')
+		tablaPlaceholder.append(carritoVacioMessage)
+		console.log('esto corre')
+	} else {
+
+		let carritoStorage = JSON.parse(localStorage.getItem('carritoConfirmado'))
+		let tablaCarritoPerfil = document.createElement('table')
+		tablaCarritoPerfil.classList.add('table')
+		let carritoPerfilHeaders = ['', 'Producto', 'Talle', 'Precio']
+		let idCompra = carritoStorage[carritoStorage.length - 1]
+		carritoStorage.pop();
+		let totalCarritoPerfilPH = document.createElement('p')
+		totalCarritoPerfilPH.classList.add('fs-4', 'text-center')
+		totalCarritoPerfilPH.setAttribute('id','totalPesos')
+		let totalCarritoPerfil = 0
+
+
+		carritoStorage.forEach((element, index) => {
+			var fila = tablaCarritoPerfil.insertRow(index);
+			fila.insertCell(0).innerHTML = `<img src="${element.imgZapa}" width=70px>`;
+			fila.insertCell(1).innerHTML = `${element.titleZapa}`
+			fila.insertCell(2).innerHTML = `${element.insideTalle}`
+			fila.insertCell(3).innerHTML = `$${element.precioZapa}`
+
+			if (index == 0) {
+				fila.insertCell(4).innerHTML = `<h3 rowspan=6>"Pedido nro. ${idCompra}"</h3>`
+				fila.insertCell(5).innerHTML = `<button type="button" class="btn btn-success" onclick="redirectToML()">Pagar</button>`
+				fila.insertCell(6).innerHTML = `<button type="button" class="btn btn-danger" onclick="deletePedido()">Cancelar Pedido</button>`
+			}
+
+			totalCarritoPerfil = totalCarritoPerfil + element.precioZapa
+
+		})
+
+		var headerCarrito = tablaCarritoPerfil.createTHead();
+		var headerFila = headerCarrito.insertRow(0);
+		carritoPerfilHeaders.forEach((element, index) => {
+			headerFila.insertCell(index).innerHTML = carritoPerfilHeaders[index]
+		})
+
+		tablaPlaceholder.append(tablaCarritoPerfil)
+		totalCarritoPerfilPH.innerHTML = 'Total $' + totalCarritoPerfil
+		tablaPlaceholder.append(totalCarritoPerfilPH)
+	}
+}
+
+// ---------------------- FETCH de cotización dólar --------------------- \\
+
+function cotizarDolar() {
+	fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales')
+		.then(res => res.json())
+		.then(data => {
+			let tablaPlaceholder = document.querySelector('#tablaCarritoPlaceholder');
+
+			let docDolarCompra = document.querySelector('#dolarCompra');
+			let docDolarVenta = document.querySelector('#dolarVenta');
+			const fetchedDolarC = parseInt(data[1].casa.compra)
+			const fetchedDolarV = parseInt(data[1].casa.venta)
+
+			docDolarCompra.innerHTML = `$ ${fetchedDolarC},00`
+			docDolarVenta.innerHTML = `$ ${fetchedDolarV+10},00`
+
+			if (window.location.pathname.includes('perfil')){
+				let totalUSD = document.createElement('p')
+				totalUSD.classList.add('text-center','fs-4')
+				let totalPesos = parseInt(document.querySelector('#totalPesos').innerText.replace('Total $',''))
+
+				let pesosAUSD = totalPesos / fetchedDolarC;
+				totalUSD.innerHTML = `(U$S ${Math.round(pesosAUSD)})`
+
+				tablaPlaceholder.append(totalUSD)
 			}
 		})
+		.catch(err => console.log(err))
+}
+
+// ---------------------- ON LOAD FUNCTIONS -------------------- //
+
+window.onload = function () {
+	let checkPath = window.location.pathname.includes('perfil')
+	if (checkPath) {
+		displayCarrito()
+		cotizarDolar()
+	} else {
+		loadTalles()
+		cotizarDolar()
 	}
+}
 
-	function displayCarrito() {
-		let tablaPlaceholder = document.querySelector('#tablaCarritoPlaceholder');
+// ---------------------- DARK MODE TOGGLER ------------------- //
 
-		if (localStorage.getItem('carritoConfirmado') === null) {
-			let carritoVacioMessage = document.createTextNode('Tu carrito se encuentra vacio')
-			tablaPlaceholder.append(carritoVacioMessage)
-			console.log('esto corre')
-		} else {
+const nightModeSwitch = document.getElementById('nightModeSwitch')
 
-			let carritoStorage = JSON.parse(localStorage.getItem('carritoConfirmado'))
-			let tablaCarritoPerfil = document.createElement('table')
-			tablaCarritoPerfil.classList.add('table')
-			let carritoPerfilHeaders = ['', 'Producto', 'Talle', 'Precio']
-			let idCompra = carritoStorage[carritoStorage.length - 1]
-			carritoStorage.pop();
-			let totalCarritoPerfilPH = document.createElement('p')
-			totalCarritoPerfilPH.classList.add('fs-4', 'text-center')
-			let totalCarritoPerfil = 0
+if (localStorage.getItem('darkMode') === null) {
+	localStorage.setItem('darkMode', "false");
+}
+
+const link = document.createElement('link');
+link.rel = 'stylesheet';
+document.getElementsByTagName('HEAD')[0].appendChild(link);
 
 
-			carritoStorage.forEach((element, index) => {
-				var fila = tablaCarritoPerfil.insertRow(index);
-				fila.insertCell(0).innerHTML = `<img src="${element.imgZapa}" width=70px>`;
-				fila.insertCell(1).innerHTML = `${element.titleZapa}`
-				fila.insertCell(2).innerHTML = `${element.insideTalle}`
-				fila.insertCell(3).innerHTML = `$${element.precioZapa}`
 
-				if (index == 0) {
-					fila.insertCell(4).innerHTML = `<h3 rowspan=6>"Pedido nro. ${idCompra}"</h3>`
-					fila.insertCell(5).innerHTML = `<button type="button" class="btn btn-success" onclick="redirectToML()">Pagar</button>`
-					fila.insertCell(6).innerHTML = `<button type="button" class="btn btn-danger" onclick="deletePedido()">Cancelar Pedido</button>`
-				}
-
-				totalCarritoPerfil = totalCarritoPerfil + element.precioZapa
-
-			})
-
-			var headerCarrito = tablaCarritoPerfil.createTHead();
-			var headerFila = headerCarrito.insertRow(0);
-			carritoPerfilHeaders.forEach((element, index) => {
-				headerFila.insertCell(index).innerHTML = carritoPerfilHeaders[index]
-			})
-
-			tablaPlaceholder.append(tablaCarritoPerfil)
-			totalCarritoPerfilPH.innerHTML = 'Total $' + totalCarritoPerfil
-			tablaPlaceholder.append(totalCarritoPerfilPH)
-		}
+function checkDarkMode() {
+	if (localStorage.getItem('darkMode') === "true") {
+		nightModeSwitch.checked = true;
+		link.href = './css/indexdark.css';
+	} else {
+		nightModeSwitch.checked = false;
+		link.href = '';
 	}
+}
 
+checkDarkMode()
 
-	// ---------------------- ON LOAD FUNCTIONS -------------------- //
-
-	window.onload = function () {
-		let checkPath = window.location.pathname.includes('perfil')
-		if (checkPath) {
-			displayCarrito()
-			console.log('corrio el carrito')
-		} else {
-			loadTalles()
-			console.log('corrio el loadtalles')
-		}
-	}
-
-	// ---------------------- DARK MODE TOGGLER ------------------- //
-
-	const nightModeSwitch = document.getElementById('nightModeSwitch')
-
-	if (localStorage.getItem('darkMode') === null) {
+function changeToDarkMode() {
+	if (localStorage.getItem('darkMode') === "true") {
 		localStorage.setItem('darkMode', "false");
+		link.href = ''
+	} else {
+		localStorage.setItem('darkMode', "true");
+		link.href = './css/indexdark.css';
 	}
-
-	const link = document.createElement('link');
-	link.rel = 'stylesheet';
-	document.getElementsByTagName('HEAD')[0].appendChild(link);
-
-
-
-	function checkDarkMode() {
-		if (localStorage.getItem('darkMode') === "true") {
-			nightModeSwitch.checked = true;
-			link.href = './css/indexdark.css';
-		} else {
-			nightModeSwitch.checked = false;
-			link.href = '';
-		}
-	}
-
-	checkDarkMode()
-
-	function changeToDarkMode() {
-		if (localStorage.getItem('darkMode') === "true") {
-			localStorage.setItem('darkMode', "false");
-			link.href = ''
-		} else {
-			localStorage.setItem('darkMode', "true");
-			link.href = './css/indexdark.css';
-		}
-	}
+}
