@@ -11,10 +11,6 @@ function cartClick() {
 	button.classList.add('clicked');
 }
 
-function cartRemove(button) {
-	button.classList.remove('clicked');
-}
-
 // -------------------------------------
 
 let totalCarrito = []
@@ -78,6 +74,7 @@ function crearCarrito() {
 			}
 
 			let carritoTable = document.createElement('table')
+			carritoTable.classList.add('table')
 			let carritoConfirm = document.createElement('div')
 			carritoConfirm.innerHTML = '<button type="button" id="botonConfirm" class="btn btn-success" onclick="confirmCarrito()">Confirmar compra</button>'
 			let carritoHeaders = ['', 'Producto', 'Talle', 'Precio']
@@ -107,6 +104,10 @@ function crearCarrito() {
 function removeCarrito(index, btn) {
 	tituloZapa = btn.parentNode.parentNode.querySelector('.tituloZapa').innerText
 
+	let cards = [...document.querySelectorAll('.card-title')];
+	let selectedCard = cards.find(e => e.innerText == tituloZapa)
+	selectedCard.parentElement.querySelector('button').classList.remove('clicked')
+ 
 	const o = totalCarrito.findIndex(elemento => {
 		return elemento.titleZapa == tituloZapa
 	})
