@@ -58,7 +58,7 @@ function crearCarrito() {
 
 	var offcanvasPlaceholder = document.querySelector('#offcanvasCarrito');
 
-	if (offcanvasPlaceholder.innerHTML == '' || offcanvasPlaceholder.innerText == 'El carrito está vacío') {
+	if (offcanvasPlaceholder.innerHTML == '' || offcanvasPlaceholder.innerText == 'El carrito está vacío' || offcanvasPlaceholder.innerText == 'Gracias por su compra') {
 
 		if (totalCarrito.length == 0) {
 
@@ -104,10 +104,10 @@ function crearCarrito() {
 function removeCarrito(index, btn) {
 	tituloZapa = btn.parentNode.parentNode.querySelector('.tituloZapa').innerText
 
-	let cards = [...document.querySelectorAll('.card-title')];
-	let selectedCard = cards.find(e => e.innerText == tituloZapa)
-	selectedCard.parentElement.querySelector('button').classList.remove('clicked')
- 
+	// let cards = [...document.querySelectorAll('.card-title')];
+	// let selectedCard = cards.find(e => e.innerText == tituloZapa)
+	// selectedCard.parentElement.querySelector('button').classList.remove('clicked')
+
 	const o = totalCarrito.findIndex(elemento => {
 		return elemento.titleZapa == tituloZapa
 	})
@@ -129,6 +129,7 @@ function confirmCarrito() {
 	totalCarrito.push(Math.round(Math.random() * 10000))
 	localStorage.setItem('carritoConfirmado', JSON.stringify(totalCarrito))
 
+	totalCarrito = []
 	botonConfirm = document.querySelector('#botonConfirm')
 	tablaRemove = document.querySelector('table')
 	botonConfirm.remove()
@@ -147,6 +148,8 @@ function confirmCarrito() {
 	)
 
 }
+
+// ---------------------- Funciones de perfil.html ---------------------- //
 
 function deletePedido() {
 
@@ -174,19 +177,34 @@ function deletePedido() {
 }
 
 function redirectToML() {
+	if (localStorage.getItem('darkMode') == 'true') {
 
-	Swal.fire({
-		title: 'Bien!',
-		text: 'Serás redirigido a Mercado Pago.',
-		imageUrl: './img/logo/mp.png',
-		imageWidth: 256,
-		imageHeight: 256,
-		imageAlt: 'MercadoPago',
-	}).then((result) => {
-		if (result.isConfirmed) {
-			window.open('https://www.mercadopago.com.ar', '_blank')
-		}
-	})
+		Swal.fire({
+			title: 'Bien!',
+			text: 'Serás redirigido a Mercado Pago.',
+			imageUrl: './img/logo/mpdark.png',
+			imageWidth: 256,
+			imageHeight: 256,
+			imageAlt: 'MercadoPago',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.open('https://www.mercadopago.com.ar', '_blank')
+			}
+		})
+	} else {
+		Swal.fire({
+			title: 'Bien!',
+			text: 'Serás redirigido a Mercado Pago.',
+			imageUrl: './img/logo/mp.png',
+			imageWidth: 256,
+			imageHeight: 256,
+			imageAlt: 'MercadoPago',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.open('https://www.mercadopago.com.ar', '_blank')
+			}
+		})
+	}
 }
 
 function displayCarrito() {
@@ -195,18 +213,22 @@ function displayCarrito() {
 	if (localStorage.getItem('carritoConfirmado') === null) {
 		let carritoVacioMessage = document.createTextNode('Tu carrito se encuentra vacio')
 		tablaPlaceholder.append(carritoVacioMessage)
-		console.log('esto corre')
 	} else {
 
 		let carritoStorage = JSON.parse(localStorage.getItem('carritoConfirmado'))
+
 		let tablaCarritoPerfil = document.createElement('table')
 		tablaCarritoPerfil.classList.add('table')
+
 		let carritoPerfilHeaders = ['', 'Producto', 'Talle', 'Precio']
+
 		let idCompra = carritoStorage[carritoStorage.length - 1]
 		carritoStorage.pop();
+
 		let totalCarritoPerfilPH = document.createElement('p')
 		totalCarritoPerfilPH.classList.add('fs-4', 'text-center')
-		totalCarritoPerfilPH.setAttribute('id','totalPesos')
+		totalCarritoPerfilPH.setAttribute('id', 'totalPesos')
+
 		let totalCarritoPerfil = 0
 
 
@@ -218,7 +240,7 @@ function displayCarrito() {
 			fila.insertCell(3).innerHTML = `$${element.precioZapa}`
 
 			if (index == 0) {
-				fila.insertCell(4).innerHTML = `<h3 rowspan=6>"Pedido nro. ${idCompra}"</h3>`
+				fila.insertCell(4).innerHTML = `<h3 rowspan=6>Pedido nro. ${idCompra}</h3>`
 				fila.insertCell(5).innerHTML = `<button type="button" class="btn btn-success" onclick="redirectToML()">Pagar</button>`
 				fila.insertCell(6).innerHTML = `<button type="button" class="btn btn-danger" onclick="deletePedido()">Cancelar Pedido</button>`
 			}
@@ -247,6 +269,8 @@ function cotizarDolar() {
 		.then(data => {
 			let tablaPlaceholder = document.querySelector('#tablaCarritoPlaceholder');
 
+			console.log(data)
+
 			let docDolarCompra = document.querySelector('#dolarCompra');
 			let docDolarVenta = document.querySelector('#dolarVenta');
 			const fetchedDolarC = parseInt(data[1].casa.compra)
@@ -255,10 +279,11 @@ function cotizarDolar() {
 			docDolarCompra.innerHTML = `$ ${fetchedDolarC},00`
 			docDolarVenta.innerHTML = `$ ${fetchedDolarV+10},00`
 
-			if (window.location.pathname.includes('perfil')){
+			if (window.location.pathname.includes('perfil')) {
 				let totalUSD = document.createElement('p')
-				totalUSD.classList.add('text-center','fs-4')
-				let totalPesos = parseInt(document.querySelector('#totalPesos').innerText.replace('Total $',''))
+				totalUSD.classList.add('text-center', 'fs-4')
+
+				let totalPesos = parseInt(document.querySelector('#totalPesos').innerText.replace('Total $', ''))
 
 				let pesosAUSD = totalPesos / fetchedDolarC;
 				totalUSD.innerHTML = `(U$S ${Math.round(pesosAUSD)})`
@@ -291,8 +316,11 @@ if (localStorage.getItem('darkMode') === null) {
 }
 
 const link = document.createElement('link');
+const linkSW = document.createElement('link');
 link.rel = 'stylesheet';
+linkSW.rel = 'stylesheet';
 document.getElementsByTagName('HEAD')[0].appendChild(link);
+document.getElementsByTagName('HEAD')[0].appendChild(linkSW);
 
 
 
@@ -300,6 +328,7 @@ function checkDarkMode() {
 	if (localStorage.getItem('darkMode') === "true") {
 		nightModeSwitch.checked = true;
 		link.href = './css/indexdark.css';
+		linkSW.href = '//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css';
 	} else {
 		nightModeSwitch.checked = false;
 		link.href = '';
@@ -312,8 +341,10 @@ function changeToDarkMode() {
 	if (localStorage.getItem('darkMode') === "true") {
 		localStorage.setItem('darkMode', "false");
 		link.href = ''
+		linkSW.href = ''
 	} else {
 		localStorage.setItem('darkMode', "true");
 		link.href = './css/indexdark.css';
+		linkSW.href = '//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css';
 	}
 }

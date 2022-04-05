@@ -129,6 +129,11 @@
 	}
 }
 
+.navbar-brand {
+	font-family: 'Fredoka One', cursive;
+	font-size: 27px;
+}
+
 .dropdown-menu {
 	width: 300px;
 

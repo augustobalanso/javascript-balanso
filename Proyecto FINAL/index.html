@@ -10,6 +10,9 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/91e0861dab.js" crossorigin="anonymous"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/index.css">
 </head>
 
@@ -18,15 +21,16 @@
   <header class="container">
     <nav class="navbar">
       <div class="container">
-        <a class="navbar-brand" href="#"><img src="./img/logo/logo.jpg" alt="" width="40" height="24" class="me-4 text-dark">Zapas</a>
-        
+        <a class="navbar-brand" href="#"><img src="./img/logo/logo.jpg" alt="" width="60" height="36"
+            class="me-4 text-dark">Zapas</a>
+
         <div>
 
-            <a href="./perfil.html"><i class="fa fas fa-solid fa-user fs-3"></i></a>
+          <a href="./perfil.html"><i class="fa fas fa-solid fa-user fs-3"></i></a>
 
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-          aria-controls="offcanvasNavbar" onclick="crearCarrito()">
-          <i class="fas fa-shopping-cart fs-3"></i>
+            aria-controls="offcanvasNavbar" onclick="crearCarrito()">
+            <i class="fas fa-shopping-cart fs-3"></i>
 
         </div>
 
@@ -211,17 +215,20 @@
           <div class="col-lg-2 col-md-6">
             <h5 class="text-white mb-3">Tomamos dólar:</h5>
             <ul class="list-unstyled text-muted">
-              <li>lo tomamos a:<p class="text-success" id="dolarCompra"></p></li>
-              <li>lo vendemos a:<p class ="text-danger" id="dolarVenta"></p></li>
+              <li>lo tomamos a:<p class="text-success" id="dolarCompra"></p>
+              </li>
+              <li>lo vendemos a:<p class="text-danger" id="dolarVenta"></p>
+              </li>
             </ul>
           </div>
           <div class="col-lg-4 col-md-6">
             <h5 class="text-white mb-3">Newsletter</h5>
-            <p class="small text-muted">Suscribite al newsletter para estar al tanto de los nuevos modelos que van ingresando.</p>
+            <p class="small text-muted">Suscribite al newsletter para estar al tanto de los nuevos modelos que van
+              ingresando.</p>
             <form action="#">
               <div class="input-group mb-3">
-                <input class="form-control" type="text" placeholder="Tu e-mail"
-                  aria-label="Tu e-mail" aria-describedby="button-addon2">
+                <input class="form-control" type="text" placeholder="Tu e-mail" aria-label="Tu e-mail"
+                  aria-describedby="button-addon2">
                 <button class="btn btn-primary" id="button-addon2" type="button"><i
                     class="fas fa-paper-plane"></i></button>
               </div>
@@ -230,7 +237,8 @@
         </div>
         <div class="row mt-5">
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="nightModeSwitch" onclick="changeToDarkMode()">
+            <input class="form-check-input" type="checkbox" role="switch" id="nightModeSwitch"
+              onclick="changeToDarkMode()">
             <label class="form-check-label text-white" for="flexSwitchCheckDefault">Nightmode</label>
           </div>
         </div>
@@ -245,6 +253,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
   </script>
+  <script src="sweetalert2/dist/sweetalert2.min.js"></script>
   <script src="./index.js"></script>
 </body>
 
