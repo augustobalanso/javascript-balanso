@@ -7,8 +7,19 @@ cartBotones.forEach(button => {
 });
 
 function cartClick() {
-	let button = this;
-	button.classList.add('clicked');
+
+	let selectCheck = this.parentNode.querySelector('.selectList').selectedIndex
+	if (selectCheck == 0) {
+		Swal.fire({
+			icon: 'error',
+			text: 'Talle no elegido!',
+			footer: 'Deberás elegir talle para agregar al carrito'
+		})
+	} else {
+		let button = this;
+		button.classList.add('clicked');
+	}
+
 }
 
 // -------------------------------------
@@ -37,22 +48,27 @@ function loadTalles() {
 }
 
 function anadircarro(nroBoton) {
-
 	let htmlZapa = document.getElementById('getPrice' + nroBoton).parentElement;
-	let imgZapa = htmlZapa.parentElement.querySelector('img').src
-	let titleZapa = htmlZapa.querySelector('h5').innerText
 	let getTalle = htmlZapa.parentElement.querySelector('select')
 	let insideTalle = getTalle.options[getTalle.selectedIndex].text;
-	let precioZapa = parseInt(htmlZapa.querySelector('#getPrice' + nroBoton).innerText.replace('$', ''));
 
-	const objectZapa = {
-		imgZapa,
-		titleZapa,
-		insideTalle,
-		precioZapa
+	if (isNaN(insideTalle)) {
+		return
+	} else {
+		let imgZapa = htmlZapa.parentElement.querySelector('img').src
+		let titleZapa = htmlZapa.querySelector('h5').innerText
+		let precioZapa = parseInt(htmlZapa.querySelector('#getPrice' + nroBoton).innerText.replace('$', ''));
+
+		const objectZapa = {
+			imgZapa,
+			titleZapa,
+			insideTalle,
+			precioZapa
+		}
+		totalCarrito.push(objectZapa)
 	}
-	totalCarrito.push(objectZapa)
 }
+
 
 function crearCarrito() {
 
@@ -104,9 +120,9 @@ function crearCarrito() {
 function removeCarrito(index, btn) {
 	tituloZapa = btn.parentNode.parentNode.querySelector('.tituloZapa').innerText
 
-	// let cards = [...document.querySelectorAll('.card-title')];
-	// let selectedCard = cards.find(e => e.innerText == tituloZapa)
-	// selectedCard.parentElement.querySelector('button').classList.remove('clicked')
+	let cards = [...document.querySelectorAll('.card-title')];
+	let selectedCard = cards.find(e => e.innerText == tituloZapa)
+	selectedCard.parentElement.querySelector('button').classList.remove('clicked')
 
 	const o = totalCarrito.findIndex(elemento => {
 		return elemento.titleZapa == tituloZapa
