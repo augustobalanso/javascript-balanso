@@ -18,6 +18,12 @@ function cartClick() {
 	} else {
 		let button = this;
 		button.classList.add('clicked');
+
+		function cartUnclick() {
+			button.classList.remove('clicked')
+		}
+		setTimeout(cartUnclick, 2600);
+
 	}
 
 }
@@ -47,8 +53,8 @@ function loadTalles() {
 	})
 }
 
-function anadircarro(nroBoton) {
-	let htmlZapa = document.getElementById('getPrice' + nroBoton).parentElement;
+function anadircarro(botonThis) {
+	let htmlZapa = botonThis.parentElement;
 	let getTalle = htmlZapa.parentElement.querySelector('select')
 	let insideTalle = getTalle.options[getTalle.selectedIndex].text;
 
@@ -57,15 +63,31 @@ function anadircarro(nroBoton) {
 	} else {
 		let imgZapa = htmlZapa.parentElement.querySelector('img').src
 		let titleZapa = htmlZapa.querySelector('h5').innerText
-		let precioZapa = parseInt(htmlZapa.querySelector('#getPrice' + nroBoton).innerText.replace('$', ''));
+		let cantidadSelec = 1
+		let precioZapa = parseInt(htmlZapa.querySelector('.text-precio').innerText.replace('$', ''));
 
 		const objectZapa = {
 			imgZapa,
 			titleZapa,
 			insideTalle,
+			cantidadSelec,
 			precioZapa
 		}
-		totalCarrito.push(objectZapa)
+
+		if (totalCarrito.length == 0) {
+			totalCarrito.push(objectZapa)
+		} else {
+			let foundProd = totalCarrito.find(element => {
+				if (element.insideTalle == objectZapa.insideTalle && element.titleZapa == objectZapa.titleZapa) {
+					element.cantidadSelec++
+					return true
+				}
+			})
+			if(foundProd == undefined){
+				totalCarrito.push(objectZapa)
+			}
+			console.log(foundProd)
+		}
 	}
 }
 
@@ -74,46 +96,45 @@ function crearCarrito() {
 
 	var offcanvasPlaceholder = document.querySelector('#offcanvasCarrito');
 
-	if (offcanvasPlaceholder.innerHTML == '' || offcanvasPlaceholder.innerText == 'El carrito está vacío' || offcanvasPlaceholder.innerText == 'Gracias por su compra') {
+	if (totalCarrito.length == 0) {
 
-		if (totalCarrito.length == 0) {
+		offcanvasPlaceholder.innerHTML = ''
+		let emptyCarritoMessage = document.createElement('p');
+		emptyCarritoMessage.classList.add('text-center')
+		emptyCarritoMessage.innerText = 'El carrito está vacío';
+		offcanvasPlaceholder.append(emptyCarritoMessage)
 
+	} else {
+		if (offcanvasPlaceholder.innerHTML != '') {
 			offcanvasPlaceholder.innerHTML = ''
-			let emptyCarritoMessage = document.createElement('p');
-			emptyCarritoMessage.innerText = 'El carrito está vacío';
-			offcanvasPlaceholder.append(emptyCarritoMessage)
-
-		} else {
-
-			if (offcanvasPlaceholder.innerHTML != '') {
-				offcanvasPlaceholder.innerHTML = ''
-			}
-
-			let carritoTable = document.createElement('table')
-			carritoTable.classList.add('table')
-			let carritoConfirm = document.createElement('div')
-			carritoConfirm.innerHTML = '<button type="button" id="botonConfirm" class="btn btn-success" onclick="confirmCarrito()">Confirmar compra</button>'
-			let carritoHeaders = ['', 'Producto', 'Talle', 'Precio']
-
-			for (var i = 0; i < totalCarrito.length; i++) {
-				var fila = carritoTable.insertRow(i);
-				fila.insertCell(0).innerHTML = '<img src="' + totalCarrito[i].imgZapa + '" width=70px>';
-				fila.insertCell(1).innerHTML = '<p class="tituloZapa">' + totalCarrito[i].titleZapa + '</p>';
-				fila.insertCell(2).innerHTML = `<p> ${totalCarrito[i].insideTalle} </p>`
-				fila.insertCell(3).innerHTML = '<p>$' + totalCarrito[i].precioZapa + '</p>';
-				fila.insertCell(4).innerHTML = '<button type="button" class="btn btn-outline-danger align-self-center" onclick="removeCarrito(' + i + ',this)"><i class="fas fa-trash"></i></button>'
-			}
-
-			var headerCarrito = carritoTable.createTHead();
-			var headerFila = headerCarrito.insertRow(0);
-			for (var i = 0; i < carritoHeaders.length; i++) {
-				headerFila.insertCell(i).innerHTML = carritoHeaders[i];
-			}
-
-			offcanvasPlaceholder.append(carritoTable)
-			offcanvasPlaceholder.append(carritoConfirm)
-
 		}
+
+		let carritoTable = document.createElement('table')
+		carritoTable.classList.add('table')
+		let carritoConfirm = document.createElement('div')
+		carritoConfirm.classList.add('d-flex', 'justify-content-center')
+		carritoConfirm.innerHTML = '<button type="button" id="botonConfirm" class="btn btn-success" onclick="confirmCarrito()">Confirmar compra</button>'
+		let carritoHeaders = ['', 'Producto', 'Talle', 'Cantidad', 'Precio']
+
+		for (var i = 0; i < totalCarrito.length; i++) {
+			var fila = carritoTable.insertRow(i);
+			fila.insertCell(0).innerHTML = '<img src="' + totalCarrito[i].imgZapa + '" width=70px>';
+			fila.insertCell(1).innerHTML = '<p class="tituloZapa">' + totalCarrito[i].titleZapa + '</p>';
+			fila.insertCell(2).innerHTML = `<p> ${totalCarrito[i].insideTalle} </p>`;
+			fila.insertCell(3).innerHTML = `<p> ${totalCarrito[i].cantidadSelec}</p>`
+			fila.insertCell(4).innerHTML = '<p>$' + totalCarrito[i].precioZapa * totalCarrito[i].cantidadSelec + '</p>';
+			fila.insertCell(5).innerHTML = '<button type="button" class="btn btn-outline-danger align-self-center" onclick="removeCarrito(' + i + ',this)"><i class="fas fa-trash"></i></button>'
+		}
+
+		var headerCarrito = carritoTable.createTHead();
+		var headerFila = headerCarrito.insertRow(0);
+		for (var i = 0; i < carritoHeaders.length; i++) {
+			headerFila.insertCell(i).innerHTML = carritoHeaders[i];
+		}
+
+		offcanvasPlaceholder.append(carritoTable)
+		offcanvasPlaceholder.append(carritoConfirm)
+
 	}
 }
 
@@ -192,6 +213,8 @@ function deletePedido() {
 
 }
 
+
+
 function redirectToML() {
 	if (localStorage.getItem('darkMode') == 'true') {
 
@@ -236,7 +259,7 @@ function displayCarrito() {
 		let tablaCarritoPerfil = document.createElement('table')
 		tablaCarritoPerfil.classList.add('table')
 
-		let carritoPerfilHeaders = ['', 'Producto', 'Talle', 'Precio']
+		let carritoPerfilHeaders = ['', 'Producto', 'Talle', 'Precio', 'Cantidad']
 
 		let idCompra = carritoStorage[carritoStorage.length - 1]
 		carritoStorage.pop();
@@ -253,15 +276,16 @@ function displayCarrito() {
 			fila.insertCell(0).innerHTML = `<img src="${element.imgZapa}" width=70px>`;
 			fila.insertCell(1).innerHTML = `${element.titleZapa}`
 			fila.insertCell(2).innerHTML = `${element.insideTalle}`
-			fila.insertCell(3).innerHTML = `$${element.precioZapa}`
+			fila.insertCell(3).innerHTML = `$${element.precioZapa*element.cantidadSelec}`
+			fila.insertCell(4).innerHTML = `${element.cantidadSelec}`
 
 			if (index == 0) {
-				fila.insertCell(4).innerHTML = `<h3 rowspan=6>Pedido nro. ${idCompra}</h3>`
-				fila.insertCell(5).innerHTML = `<button type="button" class="btn btn-success" onclick="redirectToML()">Pagar</button>`
-				fila.insertCell(6).innerHTML = `<button type="button" class="btn btn-danger" onclick="deletePedido()">Cancelar Pedido</button>`
+				fila.insertCell(5).innerHTML = `<h3 rowspan=6>Pedido nro. ${idCompra}</h3>`
+				fila.insertCell(6).innerHTML = `<button type="button" class="btn btn-success" onclick="redirectToML()">Pagar</button>`
+				fila.insertCell(7).innerHTML = `<button type="button" class="btn btn-danger" onclick="deletePedido()">Cancelar Pedido</button>`
 			}
 
-			totalCarritoPerfil = totalCarritoPerfil + element.precioZapa
+			totalCarritoPerfil = totalCarritoPerfil + element.precioZapa * element.cantidadSelec
 
 		})
 
@@ -284,8 +308,6 @@ function cotizarDolar() {
 		.then(res => res.json())
 		.then(data => {
 			let tablaPlaceholder = document.querySelector('#tablaCarritoPlaceholder');
-
-			console.log(data)
 
 			let docDolarCompra = document.querySelector('#dolarCompra');
 			let docDolarVenta = document.querySelector('#dolarVenta');
